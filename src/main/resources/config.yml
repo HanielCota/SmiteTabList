@@ -1,0 +1,16 @@
+tablist:
+  header: |
+    &6&lSMITE CRAFT
+
+    &eBem-vindo, %prefix%%player_name%!
+    &aOnline: %online%/%max%
+    &7Aproveite a sua estadia!
+  footer: |
+    &eJogue com amigos e conquiste o topo!
+    &7Discord: &9discord.gg/smitecraft
+
+  prefixes:
+    tablist_admin: "&4[Admin] "
+    tablist_vip: "&6[VIP] "
+    tablist_member: "&2[Member] "
+    default: "&7[Player] "

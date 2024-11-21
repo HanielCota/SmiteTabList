@@ -1,5 +1,5 @@
 name: SmiteTabList
 version: '1.0-SNAPSHOT'
-main: com.github.hanielcota.smiteTabList.SmiteTabListPlugin
+main: com.github.hanielcota.smitetablist.TablistPlugin
 api-version: '1.21'
 authors: [ HanielFialho ]

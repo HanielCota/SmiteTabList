@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "io.github.goooler.shadow" version "8.1.7"
 }
 
 group = 'com.github.hanielcota'
@@ -15,10 +16,19 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+
+    // Commands framework
+    implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
+
+
+    // Lombok for annotations processing
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
 
 def targetJavaVersion = 21
@@ -37,6 +47,15 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
     }
+}
+
+tasks.build {
+    dependsOn shadowJar
+}
+
+shadowJar {
+    relocate 'co.aikar.commands', 'ccom.github.hanielcota.smiteTabList.commands'
+    relocate 'co.aikar.locales', 'com.github.hanielcota.smiteTabList.locales'
 }
 
 processResources {
