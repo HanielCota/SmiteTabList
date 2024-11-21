@@ -7,7 +7,7 @@ import co.aikar.commands.annotation.Subcommand;
 import com.github.hanielcota.smitetablist.manager.TablistManager;
 import com.github.hanielcota.smitetablist.utils.ColorUtils;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 @RequiredArgsConstructor
@@ -19,12 +19,9 @@ public class TablistCommand extends BaseCommand {
 
     @Subcommand("reload")
     @CommandPermission("tablist.reload")
-    public void reload(Player player) {
+    public void reload(CommandSender sender) {
 
         tablistManager.reloadTablistForAllPlayers();
-
-        player.sendMessage(ColorUtils.colorize("&aTablist recarregada para todos os jogadores!"));
-
-        plugin.getLogger().info("Tablist recarregada com sucesso.");
+        sender.sendMessage(ColorUtils.colorize("&aTablist recarregada para todos os jogadores!"));
     }
 }

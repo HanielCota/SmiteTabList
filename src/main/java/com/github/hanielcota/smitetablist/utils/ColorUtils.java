@@ -19,7 +19,9 @@ public class ColorUtils {
      * @return O componente formatado.
      */
     public static Component colorize(String text) {
-        if (text == null || text.isEmpty()) return Component.empty();
+        if (text == null || text.isEmpty()) {
+            return Component.empty();
+        }
 
         // Substitui § por & para garantir compatibilidade
         text = text.replace('§', '&');
@@ -35,7 +37,9 @@ public class ColorUtils {
      * @return O texto sem formatação.
      */
     public static String stripColors(String text) {
-        if (text == null || text.isEmpty()) return "";
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
 
         // Remove todos os códigos de cor usando regex
         return text.replaceAll("(?i)([&§])[0-9a-fk-orx]", "");

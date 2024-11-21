@@ -31,7 +31,11 @@ public class ConfigPrefixProvider implements PermissionPrefixProvider {
             Object value = entry.getValue();
 
             if (!(value instanceof String prefix)) {
-                configUtil.getPlugin().getLogger().warning("A chave '" + permission + "' contém um valor inválido. Ignorando...");
+                configUtil
+                        .getPlugin()
+                        .getLogger()
+                        .warning("A chave '" + permission + "' contém um valor inválido. Ignorando...");
+
                 continue;
             }
 
