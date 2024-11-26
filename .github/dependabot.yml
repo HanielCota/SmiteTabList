@@ -1,25 +1,15 @@
 version: 2
 updates:
-  # Atualizações para dependências do Gradle
+  # Atualizações para todas as dependências do Gradle, incluindo PaperMC
   - package-ecosystem: "gradle"
     directory: "/" # Local do arquivo build.gradle ou settings.gradle
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
-  # Atualizações para versão do Java
+  # Atualizações para versão do Java nos workflows de GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/" # Local do workflow do GitHub Actions
     schedule:
-      interval: "weekly"
+      interval: "daily"
     allow:
       - dependency-type: "direct"
-
-  # Atualizações para dependências do PaperMC (se gerenciadas via Gradle)
-  - package-ecosystem: "gradle"
-    directory: "/" # PaperMC configurado no build.gradle
-    schedule:
-      interval: "weekly"
-    ignore:
-      - dependency-name: "io.papermc.paper"
-        versions:
-          - "<1.23" # Ignora versões abaixo da mínima suportada
