@@ -2,91 +2,97 @@
 ---
 
 # **SmiteTabList**
-[![Java](https://img.shields.io/badge/Java-21%2B-orange)](https://openjdk.org/projects/jdk/21/)
 
-O **SmiteTabList** é um plugin avançado e personalizável para servidores Minecraft. Ele permite gerenciar e customizar o tablist dos jogadores com funcionalidades poderosas e intuitivas, como placeholders dinâmicos, integração com sistemas de permissões, e personalização de cores. Feito para quem deseja transformar o tablist em um diferencial no servidor!
+> Um plugin de alta performance para personalização do tablist no Minecraft, desenvolvido com as melhores práticas de engenharia de software.
 
----
-
-## **🎮 Recursos**
-- **Customização Completa**: Altere o tablist de forma dinâmica com nomes, prefixos e sufixos personalizados.
-- **Placeholders Dinâmicos**: Exiba informações como número de jogadores online ou mensagens customizadas.
-- **Configuração YAML**: Arquivos de configuração fáceis de usar para ajustes rápidos.
-- **Integração com Permissões**: Personalize o tablist com base em permissões do jogador.
-- **Sistema de Cores**: Adicione códigos de cores para criar um visual único e vibrante.
-- **Desempenho Otimizado**: Totalmente compatível com PaperMC para máxima eficiência.
+O **SmiteTabList** é um plugin modular e extensível para servidores Minecraft baseados em **PaperMC**, projetado para oferecer uma experiência profissional e personalizada no tablist dos jogadores. Focado em **clean code**, **desempenho** e **manutenibilidade**, o projeto utiliza tecnologias modernas e princípios sólidos de desenvolvimento.
 
 ---
 
-## **📋 Requisitos**
-- **Minecraft**: Versão 1.23 ou superior.
-- **Java**: Versão 21 ou superior.
-- **PaperMC**: Recomendado para melhor compatibilidade.
+## **Recursos Principais**
+
+- **Tablist Personalizado**: Personalize nomes, prefixos e sufixos dinamicamente com base em permissões e configurações específicas.
+- **Placeholders Dinâmicos**: Integre informações como número de jogadores online, prefixos customizados e muito mais.
+- **Configuração Modular**: Arquivos YAML claros e intuitivos permitem ajustes rápidos e escaláveis.
+- **Sistema de Cores**: Suporte completo a formatação de cores no estilo Minecraft.
+- **Integração com Permissões**: Ajuste o tablist com base em grupos ou permissões do jogador.
+- **Arquitetura Escalável**: Código organizado em camadas, garantindo extensibilidade e clareza.
 
 ---
 
-## **📥 Instalação**
-1. Faça o download do plugin na [página de releases](#).
-2. Coloque o arquivo `.jar` na pasta `plugins` do seu servidor PaperMC.
-3. Reinicie o servidor.
-4. Configure o plugin no arquivo `config.yml` gerado na pasta `plugins/SmiteTabList`.
+## **Requisitos**
+
+- **Minecraft**: Compatível com a versão 1.23 ou superior.
+- **Java**: Necessário Java 21 ou superior para suporte a recursos modernos da linguagem.
+- **Servidor**: Recomendado PaperMC para melhor desempenho e compatibilidade.
 
 ---
 
-## **⚙️ Configuração**
-O arquivo `config.yml` permite personalizar completamente o tablist:
+## **Instalação**
+
+1. Faça o download do arquivo `.jar` disponível na [página de releases](#).
+2. Insira o arquivo na pasta `plugins` do seu servidor PaperMC.
+3. Reinicie o servidor para que o plugin seja carregado.
+4. Edite o arquivo `config.yml` gerado em `plugins/SmiteTabList` para ajustar as configurações.
+
+---
+
+## **Configuração**
+
+O **SmiteTabList** utiliza arquivos YAML para gerenciar todas as configurações. Exemplo básico:
+
 ```yaml
-# Exemplo de Configuração
 tablist:
   header: "&6Bem-vindo ao servidor!"
-  footer: "&7Divirta-se com amigos!"
+  footer: "&7Divirta-se!"
   players:
     default: "&a{player_name}"
     admin: "&c[Admin] {player_name}"
 ```
 
-Para mais placeholders, consulte a [documentação completa](#).
+Para placeholders adicionais e integrações avançadas, consulte a [documentação](#).
 
 ---
 
-## **🛠 Desenvolvimento**
-### **Estrutura do Projeto**
-- **initializer/**: Configuração inicial do plugin.
-- **listener/**: Eventos de jogadores.
-- **manager/**: Gerenciamento de exibições e nicks.
-- **provider/**: Fornecedores de prefixos e configurações.
-- **services/**: Serviços de placeholders.
-- **utils/**: Utilitários para cores, placeholders e configuração.
+## **Arquitetura do Projeto**
 
-### **Tecnologias**
-- **Java 21**: Código moderno e performático.
-- **PaperMC API**: Para maior eficiência em servidores Minecraft.
-- **Princípios Clean Code**: Código limpo e escalável.
+O **SmiteTabList** foi desenvolvido seguindo uma abordagem orientada a objetos e os princípios **SOLID**, proporcionando um código limpo e altamente extensível.
+
+### **Estrutura**
+- **initializer/**: Configuração inicial e ciclo de vida do plugin.
+- **listener/**: Eventos e interações de jogadores.
+- **manager/**: Controle central de exibição e lógica do tablist.
+- **provider/**: Fornecedores de dados dinâmicos como prefixos e permissões.
+- **services/**: Serviços auxiliares, como placeholders e manipulação de nicks.
+- **utils/**: Ferramentas de suporte, incluindo cores e manipulação de placeholders.
+
+### **Tecnologias Utilizadas**
+- **PaperMC API**: Base para interação eficiente com o Minecraft.
+- **HikariCP**: Gerenciamento de conexões com bancos de dados, garantindo alta performance.
+- **Lombok**: Redução de boilerplate no código.
+- **Caffeine Cache**: Otimização de desempenho para dados frequentemente acessados.
 
 ---
 
-## **📚 Contribuição**
-Contribuições são bem-vindas! Siga os passos abaixo para colaborar:
+## **Contribuição**
+
+Contribuições são bem-vindas para melhorar o **SmiteTabList**. Para colaborar:
+
 1. Faça um fork deste repositório.
-2. Crie um branch para sua feature ou correção: `git checkout -b minha-feature`.
-3. Faça o commit de suas alterações: `git commit -m 'Adiciona nova feature'`.
-4. Envie o push para o branch: `git push origin minha-feature`.
-5. Abra um Pull Request.
+2. Crie um branch para sua contribuição: `git checkout -b minha-feature`.
+3. Faça suas alterações seguindo os padrões do projeto.
+4. Envie um Pull Request explicando suas modificações.
 
 ---
 
-## **🔗 Links**
-- **[Documentação](#)** (em breve)
-- **[Página de Releases](#)**
+## **Licença**
+
+Este projeto é licenciado sob a [Licença MIT](LICENSE).
 
 ---
 
-## **📝 Licença**
-Este projeto é licenciado sob a [MIT License](LICENSE).
+**Desenvolvido por [Haniel Cota](https://github.com/HanielCota) com foco em qualidade, desempenho e inovação.**  
 
----
-
-Transforme o tablist do seu servidor com o **SmiteTabList**! 🚀  
-**Desenvolvido com ❤️ por [Haniel Cota](https://github.com/HanielCota).**
+Aprimore a experiência de seus jogadores com o **SmiteTabList**! 🚀
 
 --- 
