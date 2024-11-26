@@ -2,9 +2,6 @@
 ---
 
 # **SmiteTabList**
-
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.23%2B-brightgreen)](https://www.minecraft.net/)
-[![PaperMC](https://img.shields.io/badge/PaperMC-Compatible-blue)](https://papermc.io/)
 [![Java](https://img.shields.io/badge/Java-21%2B-orange)](https://openjdk.org/projects/jdk/21/)
 
 O **SmiteTabList** é um plugin avançado e personalizável para servidores Minecraft. Ele permite gerenciar e customizar o tablist dos jogadores com funcionalidades poderosas e intuitivas, como placeholders dinâmicos, integração com sistemas de permissões, e personalização de cores. Feito para quem deseja transformar o tablist em um diferencial no servidor!
