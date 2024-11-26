@@ -1,7 +1,8 @@
-package com.github.hanielcota.smitetablist.utils;
+package com.github.hanielcota.smitetablist.configuration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,6 +17,13 @@ public class ConfigUtil {
     private final String fileName;
     private File configFile;
     private FileConfiguration configuration;
+
+    public static String formatWithPlaceholders(String text, Map<String, String> placeholders) {
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            text = text.replace(entry.getKey(), entry.getValue());
+        }
+        return text;
+    }
 
     /**
      * Inicializa o arquivo de configuração.

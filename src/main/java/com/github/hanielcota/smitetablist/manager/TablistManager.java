@@ -1,23 +1,33 @@
 package com.github.hanielcota.smitetablist.manager;
 
-import com.github.hanielcota.smitetablist.provider.PermissionPrefixProvider;
+import com.github.hanielcota.smitetablist.cache.PrefixCache;
+import com.github.hanielcota.smitetablist.configuration.ConfigUtil;
+import com.github.hanielcota.smitetablist.provider.ConfigPrefixProvider;
+import com.github.hanielcota.smitetablist.services.TablistPlaceholderService;
 import com.github.hanielcota.smitetablist.utils.ColorUtils;
-import com.github.hanielcota.smitetablist.utils.ConfigUtil;
-import com.github.hanielcota.smitetablist.utils.PlaceholderService;
-import com.github.hanielcota.smitetablist.utils.PlaceholderUtils;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
+import java.util.concurrent.CompletableFuture;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-@RequiredArgsConstructor
+@Getter
 public class TablistManager {
 
-    private final PermissionPrefixProvider prefixProvider;
     private final ConfigUtil configUtil;
+    private final ConfigPrefixProvider prefixProvider;
+    private final TablistPlaceholderService placeholderService = new TablistPlaceholderService();
     private final PlayerNickDisplayManager playerNickDisplayManager = new PlayerNickDisplayManager();
-    private final PlaceholderService placeholderService = new PlaceholderService();
+
+    public TablistManager(ConfigUtil configUtil) {
+        if (configUtil == null) {
+            throw new IllegalArgumentException("ConfigUtil não pode ser nulo!");
+        }
+        this.configUtil = configUtil;
+
+        PrefixCache prefixCache = new PrefixCache();
+        this.prefixProvider = new ConfigPrefixProvider(configUtil, prefixCache);
+    }
 
     public void updatePlayerTablist(Player player) {
         if (player == null) return;
@@ -28,26 +38,18 @@ public class TablistManager {
         int onlinePlayers = Bukkit.getOnlinePlayers().size();
         int maxPlayers = Bukkit.getMaxPlayers();
 
-        // Obtém o mapa de placeholders do PlaceholderService
-        Map<String, String> placeholders = placeholderService.createPlaceholders(player, prefix, onlinePlayers, maxPlayers);
+        Map<String, String> placeholders =
+                placeholderService.getPlaceholders(player, prefix, onlinePlayers, maxPlayers);
 
-        // Substitui os placeholders no cabeçalho e rodapé
-        String rawHeader = configUtil.get("tablist.header", String.class);
-        String rawFooter = configUtil.get("tablist.footer", String.class);
+        String header = ConfigUtil.formatWithPlaceholders(configUtil.get("tablist.header", String.class), placeholders);
+        String footer = ConfigUtil.formatWithPlaceholders(configUtil.get("tablist.footer", String.class), placeholders);
 
-        String header = rawHeader != null ? PlaceholderUtils.replacePlaceholders(rawHeader, placeholders) : "";
-        String footer = rawFooter != null ? PlaceholderUtils.replacePlaceholders(rawFooter, placeholders) : "";
+        player.sendPlayerListHeaderAndFooter(ColorUtils.colorize(header), ColorUtils.colorize(footer));
 
-        // Envia o cabeçalho e rodapé formatados ao jogador
-        Component headerComponent = ColorUtils.colorize(header);
-        Component footerComponent = ColorUtils.colorize(footer);
-        player.sendPlayerListHeaderAndFooter(headerComponent, footerComponent);
-
-        // Atualiza o display do jogador
         playerNickDisplayManager.updatePlayerDisplay(player, prefix);
     }
 
     public void reloadTablistForAllPlayers() {
-        Bukkit.getOnlinePlayers().forEach(this::updatePlayerTablist);
+        Bukkit.getOnlinePlayers().forEach(player -> CompletableFuture.runAsync(() -> updatePlayerTablist(player)));
     }
 }

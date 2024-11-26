@@ -1,6 +1,7 @@
 package com.github.hanielcota.smitetablist.provider;
 
-import com.github.hanielcota.smitetablist.utils.ConfigUtil;
+import com.github.hanielcota.smitetablist.cache.PrefixCache;
+import com.github.hanielcota.smitetablist.configuration.ConfigUtil;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
@@ -8,42 +9,53 @@ import org.bukkit.entity.Player;
 @RequiredArgsConstructor
 public class ConfigPrefixProvider implements PermissionPrefixProvider {
 
+    private static final String DEFAULT_PREFIX = "&7[Player] ";
+
     private final ConfigUtil configUtil;
+    private final PrefixCache prefixCache;
 
     @Override
     public String getPrefix(Player player) {
+        String cachedPrefix = prefixCache.get(player.getName());
+        if (cachedPrefix != null) {
+            return cachedPrefix;
+        }
+
+        String computedPrefix = computePrefix(player);
+        prefixCache.put(player.getName(), computedPrefix);
+        return computedPrefix;
+    }
+
+    private String computePrefix(Player player) {
         if (configUtil.getConfiguration() == null) {
-            configUtil.getPlugin().getLogger().warning("Configuração não carregada. Usando prefixo padrão.");
-            return "&7[Player] ";
+            logWarning("Configuração não carregada. Usando prefixo padrão.");
+            return DEFAULT_PREFIX;
         }
 
         var section = configUtil.getConfiguration().getConfigurationSection("tablist.prefixes");
-
         if (section == null) {
-            configUtil.getPlugin().getLogger().warning("Seção 'tablist.prefixes' não encontrada no config.yml.");
-            return "&7[Player] ";
+            logWarning("Seção 'tablist.prefixes' não encontrada no config.yml.");
+            return DEFAULT_PREFIX;
         }
 
         Map<String, Object> prefixes = section.getValues(false);
         for (Map.Entry<String, Object> entry : prefixes.entrySet()) {
-
-            String permission = entry.getKey();
-            Object value = entry.getValue();
-
-            if (!(value instanceof String prefix)) {
-                configUtil
-                        .getPlugin()
-                        .getLogger()
-                        .warning("A chave '" + permission + "' contém um valor inválido. Ignorando...");
-
-                continue;
-            }
-
-            if (player.hasPermission(permission)) {
-                return prefix;
+            if (isValidPrefix(entry) && player.hasPermission(entry.getKey())) {
+                return (String) entry.getValue();
             }
         }
+        return (String) prefixes.getOrDefault("default", DEFAULT_PREFIX);
+    }
 
-        return (String) prefixes.getOrDefault("default", "&7[Player] ");
+    private void logWarning(String message) {
+        configUtil.getPlugin().getLogger().warning(message);
+    }
+
+    private boolean isValidPrefix(Map.Entry<String, Object> entry) {
+        if (!(entry.getValue() instanceof String)) {
+            logWarning("A chave '" + entry.getKey() + "' contém um valor inválido. Ignorando...");
+            return false;
+        }
+        return true;
     }
 }
