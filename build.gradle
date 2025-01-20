@@ -25,7 +25,7 @@ dependencies {
     // Commands framework
     implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
 
-    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
 
     // Lombok for annotations processing
     compileOnly 'org.projectlombok:lombok:1.18.36'
